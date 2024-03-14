@@ -1,8 +1,54 @@
-import React from "react";
+import axios from "axios";
+import React ,{ useState } from "react";
 import InputMask from 'react-input-mask';
 import { Button, Container, Divider, Form, FormField, FormGroup, Icon,TextArea } from 'semantic-ui-react';
-export default function FormProduto () {
+export default function FormEntregador () {
 
+    const [nome, setNome] = useState();
+    const [cpf, setCpf] = useState();
+    const [rg, setRG] = useState();
+    const [dtNascimento, setDTNascimento] = useState();
+    const [foneFixo, setFoneFixo] = useState();
+    const [foneCelular, setFoneCelular] = useState();
+    const [qtdEntregasRealizadas, setQTDEntregasRealizadas] = useState();
+    const [valorPorFrete, setValorPorFrete] = useState();
+    const [rua, setRua] = useState();
+    const [numero, setNumero] = useState();
+    const [bairro, setBairro] = useState();
+    const [cidade, setCidade] = useState();
+    const [cep, setCep] = useState();
+    const [uf, setUf] = useState();
+    const [complemento, setComplemento] = useState();
+    const [ativo, setAtivo] = useState();
+
+    function salvar() {
+
+    let entregadorRequest = {
+         nome: nome,
+         cpf: cpf,
+         dtNascimento: dtNascimento,
+         foneFixo: foneFixo,
+         foneCelular: foneCelular,
+         qtdEntregasRealizadas: qtdEntregasRealizadas,
+         valorPorFrete: valorPorFrete,
+         rua: rua,
+         numero: numero,
+         bairro: bairro,
+         cidade: cidade,
+         cep: cep,
+         uf: uf,
+         complemento: complemento,
+         ativo: ativo
+    }
+
+    axios.post("http://localhost:8081/api/entregador", entregadorRequest)
+    .then((response) => {
+         console.log('Entregador cadastrado com sucesso.')
+    })
+    .catch((error) => {
+         console.log('Erro ao incluir o um entregador.')
+    })
+}
     
     return (
 
@@ -27,7 +73,8 @@ export default function FormProduto () {
                                     fluid
                                     label='Nome'
                                     maxLength="100"
-                                    
+                                    value={nome}
+			                        onChange={e => setNome(e.target.value)}
                                 />
 
                                 <Form.Input
@@ -37,7 +84,8 @@ export default function FormProduto () {
                                     <InputMask
                                         required
                                         mask="999.999.999-99"
-                                       
+                                        value={cpf}
+			                            onChange={e => setCpf(e.target.value)}
                                     /> 
                                 </Form.Input>
 
@@ -48,7 +96,8 @@ export default function FormProduto () {
                                     <InputMask
                                         required
                                         mask="99.999.999"
-                                       
+                                        value={rg}
+			                            onChange={e => setRG(e.target.value)}
                                     /> 
                                 
                                 </Form.Input>
@@ -58,50 +107,94 @@ export default function FormProduto () {
                             <Form.Input
                              label='DT Nascimento'>
                                 <InputMask
-                                mask="99/99/9999"/>
+                                mask="99/99/9999"
+                                maskChar={null}
+                                placeholder="Ex: 20/03/1985"
+                                value={dtNascimento}
+                                onChange={e => setDTNascimento(e.target.value)}
+                                />
                              </Form.Input>
-                                    
-                            
+                             <Form.Input
+                                    fluid
+                                    label='Fone Fixo'
+                                    width={6}>
+                                    <InputMask 
+                                        mask="(99) 9999.9999"
+                                        value={foneFixo}
+			                            onChange={e => setFoneFixo(e.target.value)}
+                                    />
+                            </Form.Input>
+                            <Form.Input
+                                    fluid
+                                    label='Fone Celular'
+                                    width={6}>
+                                    <InputMask 
+                                        mask="(99) 9999.9999"
+                                        value={foneCelular}
+			                            onChange={e => setFoneCelular(e.target.value)}
+                                    /> 
+                                </Form.Input>
+                                <Form.Input
+                                    fluid
+                                    label='QTD Entregas Realizadas'
+                                    value={qtdEntregasRealizadas}
+			                        onChange={e => setQTDEntregasRealizadas(e.target.value)}
+                                />
+                                      <Form.Input
+                                    fluid
+                                    label='Valor Por Frete'
+                                    value={valorPorFrete}
+			                        onChange={e => setValorPorFrete(e.target.value)}
+                                />
                             </FormGroup>
 
                             <Form.Group widths='equal'>
 
                                 <Form.Input
-                                   required
                                    fluid
-                                    label='Valor Unitário'
-                                    width={6}>
-                                     <InputMask 
-                                        mask="999"
-                                        
-                                    /> 
-                        
-                                </Form.Input>
+                                    label='Rua'
+                                    value={rua}
+			                        onChange={e => setRua(e.target.value)}
+                                    />
 
                                 <Form.Input
                                     fluid
-                                    label='Tempo de entrega mínima em minutos'
-                                    width={6}>
-                                    <InputMask 
-                                        mask="99"
-                                        placeholder="30"
+                                    label='Número'
+                                    value={numero}
+			                        onChange={e => setNumero(e.target.value)}
                                     /> 
-                                </Form.Input>
-
-                                <Form.Input
-                                    fluid
-                                    label='Tempo de entrega maxíma em minutos'
-                                    width={6}
-                                >
-                                    <InputMask 
-                                        mask="99" 
-                                        maskChar={null}
-                                        placeholder="40"
-                                    /> 
-                                </Form.Input>
 
                             </Form.Group>
-                        
+                            <Form.Group widths='equal'>
+
+                                <Form.Input
+                                    required
+                                    fluid
+                                    label='Bairro'
+                                    maxLength="100"
+                                    value={bairro}
+                                    onChange={e => setBairro(e.target.value)}
+                                />
+
+                                <Form.Input
+                                    required
+                                    fluid
+                                    label='Cidade'
+                                    value={cidade}
+                                    onChange={e => setCidade(e.target.value)}
+                                    
+                                />
+
+                                <Form.Input 
+                                required
+                                    fluid
+                                    label='CEP'
+                                    value={cep}
+                                    onChange={e => setCep(e.target.value)}
+                                    /> 
+
+                               
+                                </Form.Group>
                         </Form>
                         
                         <div style={{marginTop: '4%'}}>
