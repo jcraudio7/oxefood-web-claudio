@@ -46,16 +46,14 @@ export default function FormProduto () {
                             <FormGroup>
                             <Form.Input
                                     label='Descrição'
-                                    maxLength="300"
-                                    placeholder="Informe a descrição do produto"
-                
                             /><TextArea placeholder='Informe a descrição do produto' />
                             </FormGroup>
 
                             <Form.Group widths='equal'>
 
                                 <Form.Input
-                                    fluid
+                                   required
+                                   fluid
                                     label='Valor Unitário'
                                     width={6}>
                                      <InputMask 
