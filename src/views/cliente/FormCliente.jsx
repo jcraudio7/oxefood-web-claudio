@@ -1,5 +1,5 @@
 import axios from "axios";
-import React from "react";
+import React ,{ useState }from "react";
 import InputMask from 'react-input-mask';
 import { Button, Container, Divider, Form, Icon } from 'semantic-ui-react';
 
@@ -11,13 +11,6 @@ export default function FormCliente () {
     const [foneCelular, setFoneCelular] = useState();
     const [foneFixo, setFoneFixo] = useState();
  
-    state = {
-        nome: null,
-        cpf: null,
-        dataNascimento: null,
-        foneCelular: null,
-        foneFixo: null
-    }
 
     function salvar() {
 
@@ -99,8 +92,8 @@ export default function FormCliente () {
                                     width={6}>
                                     <InputMask 
                                         mask="(99) 9999.9999"
-                                        value={fonefixo}
-			                            onChange={e => setfoneFixo(e.target.value)}
+                                        value={foneFixo}
+			                            onChange={e => setFoneFixo(e.target.value)}
                                     /> 
                                 </Form.Input>
 
