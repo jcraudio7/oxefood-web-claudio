@@ -2,6 +2,7 @@ import axios from "axios";
 import React ,{ useState } from "react";
 import InputMask from 'react-input-mask';
 import { Button, Container, Divider, Form, FormField, FormGroup, Icon,TextArea } from 'semantic-ui-react';
+import MenuSistema from '../../MenuSistema';
 export default function FormEntregador () {
 
     const [nome, setNome] = useState();
@@ -53,6 +54,9 @@ export default function FormEntregador () {
     return (
 
         <div>
+
+         <MenuSistema />
+
 
             <div style={{marginTop: '3%'}}>
 
@@ -195,6 +199,45 @@ export default function FormEntregador () {
 
                                
                                 </Form.Group>
+                                <Form.Group widths='equal'>
+
+                                    <Form.Input                                  
+                                        fluid
+                                        label='UF'
+                                        maxLength="2"
+                                        value={uf}
+                                        onChange={e => setUf(e.target.value)}
+                                    />
+
+                                    </Form.Group>
+                                    <Form.Group widths='equal'>
+
+                                        <Form.Input                                  
+                                            fluid
+                                            label='Complemento'
+                                            maxLength="100"
+                                            value={complemento}
+                                            onChange={e => setComplemento(e.target.value)}
+                                        />
+
+                                        </Form.Group>
+                                        <Form.Group inline>
+
+                                            <label>Ativo: </label>
+
+                                            <Form.Radio
+                                            label='Sim'
+                                            checked={ativo}
+                                            onChange={e => setAtivo(true)}
+                                            />
+
+                                            <Form.Radio
+                                            label='Não'
+                                            checked={!ativo}
+                                            onChange={e => setAtivo(false)}
+                                            />
+
+                                            </Form.Group>
                         </Form>
                         
                         <div style={{marginTop: '4%'}}>
