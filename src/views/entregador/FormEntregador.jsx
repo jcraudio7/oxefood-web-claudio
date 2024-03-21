@@ -3,6 +3,7 @@ import React ,{ useState } from "react";
 import InputMask from 'react-input-mask';
 import { Button, Container, Divider, Form, FormField, FormGroup, Icon,TextArea } from 'semantic-ui-react';
 import MenuSistema from '../../MenuSistema';
+import { Link } from "react-router-dom";
 export default function FormEntregador () {
 
     const [nome, setNome] = useState();
@@ -27,6 +28,7 @@ export default function FormEntregador () {
     let entregadorRequest = {
          nome: nome,
          cpf: cpf,
+         rg: rg,
          dtNascimento: dtNascimento,
          foneFixo: foneFixo,
          foneCelular: foneCelular,
@@ -251,7 +253,7 @@ export default function FormEntregador () {
                                 color='orange'
                             >
                                 <Icon name='reply' />
-                                Voltar
+                                <Link to={'/list-entregador'}>Voltar</Link>
                             </Button>
                                 
                             <Button
