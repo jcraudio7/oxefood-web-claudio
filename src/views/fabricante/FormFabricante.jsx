@@ -5,29 +5,30 @@ import { Button, Container, Divider, Form, Icon } from 'semantic-ui-react';
 import MenuSistema from '../../MenuSistema';
 import { Link, useLocation } from "react-router-dom";
 
-export default function FormFornecedor () {
+export default function FormFabricante () {
 
     const { state } = useLocation();
-    const [idFornecedor, setIdFornecedor] = useState();
+    const [idFabricante, setIdFabricante] = useState();
 
     const [nome, setNome] = useState();
-    const [dataFundacao, setDataFundacao] = useState();
     const [endereco, setEndereco] = useState();
-    const [valorDeMercado, setValorDeMercado] = useState();
-    const [contatoDoVendedor, setContatoDoVendedor] = useState();
+    const [valorMercado, setValorMercado] = useState();
     const [paginaWeb, setPaginaWeb] = useState();
+    const [qtdFuncionarios, setQtdFuncionarios] = useState();
+    const [inicioContrato, setInicioContrato] = useState();
+
 
     useEffect(() => {
         if (state != null && state.id != null) {
-            axios.get("http://localhost:8081/api/fornecedor/" + state.id)
+            axios.get("http://localhost:8081/api/fabricante/" + state.id)
             .then((response) => {
-                           setIdFornecedor(response.data.id)
+                           setIdFabricante(response.data.id)
                            setNome(response.data.nome)
-                           setDataFundacao(response.data.dataFundacao)
                            setEndereco(response.data.endereco)
-                           setValorDeMercado(response.data.valorDeMercado)
-                           setContatoDoVendedor(response.data.contatoDoVendedor)
+                           setValorMercado(response.data.valorDeMercado)
                            setPaginaWeb(response.data.paginaWeb)
+                           setQtdFuncionarios(response.data.qtdFuncionarios)
+                           setInicioContrato(response.data.inicioContrato)
             })
         }
     }, [state])
@@ -35,23 +36,23 @@ export default function FormFornecedor () {
 
     function salvar() {
 
-    let fornecedorRequest = {
+    let fabricanteRequest = {
          nome: nome,
-         dataFundacao: dataFundacao,
          endereco: endereco,
-         valorDeMercado: valorDeMercado,
-         contatoDoVendedor: contatoDoVendedor,
-         paginaWeb: paginaWeb
+         valorMercado: valorMercado,
+         paginaWeb: paginaWeb,
+         qtdFuncionarios: qtdFuncionarios,
+         inicioContrato: inicioContrato
     }
 
-    if (idFornecedor != null) { //Alteração:
-        axios.put("http://localhost:8081/api/fornecedor/" + idFornecedor, fornecedorRequest)
-        .then((response) => { console.log('Fornecedor alterado com sucesso.') })
-        .catch((error) => { console.log('Erro ao alterar fornecedor.') })
+    if (idFabricante != null) { //Alteração:
+        axios.put("http://localhost:8081/api/fabricante/" + idFabricante, fabricanteRequest)
+        .then((response) => { console.log('Fabricante alterado com sucesso.') })
+        .catch((error) => { console.log('Erro ao alterar fabricante.') })
     } else { //Cadastro:
-        axios.post("http://localhost:8081/api/fornecedor", fornecedorRequest)
-        .then((response) => { console.log('Fornecedor cadastrado com sucesso.') })
-        .catch((error) => { console.log('Erro ao incluir o fornecedor.') })
+        axios.post("http://localhost:8081/api/fabricante", fabricanteRequest)
+        .then((response) => { console.log('Fabricante cadastrado com sucesso.') })
+        .catch((error) => { console.log('Erro ao incluir o fabricante.') })
     }
 
 }
@@ -69,10 +70,10 @@ export default function FormFornecedor () {
                 <Container textAlign='justified' >
 
                 { idFornecedor === undefined &&
-                        <h2> <span style={{color: 'darkgray'}}> Fornecedor &nbsp;<Icon name='angle double right' size="small" /> </span> Cadastro</h2>
+                        <h2> <span style={{color: 'darkgray'}}> Fabricante &nbsp;<Icon name='angle double right' size="small" /> </span> Cadastro</h2>
                     }
                     { idCliente != undefined &&
-                        <h2> <span style={{color: 'darkgray'}}> Fornecedor &nbsp;<Icon name='angle double right' size="small" /> </span> Alteração</h2>
+                        <h2> <span style={{color: 'darkgray'}}> Fabricante &nbsp;<Icon name='angle double right' size="small" /> </span> Alteração</h2>
                     }
 
 
@@ -96,14 +97,19 @@ export default function FormFornecedor () {
                                 <Form.Input
                                     required
                                     fluid
-                                    label='Data Fundação '>
-                                    <InputMask
-                                        required
-                                        mask="999.999.999-99"
-                                        value={cpf}
-			                            onChange={e => setCpf(e.target.value)}
-                                    /> 
-                                </Form.Input>
+                                    label='Endereço'
+                                    maxLength="100"
+                                    value={endereco}
+			                        onChange={e => setEndereco(e.target.value)}
+                                  />  
+
+                                <Form.Input
+                                    required
+                                    fluid
+                                    label='Valor de Mercado'
+                                    value={valorMercado}
+			                        onChange={e => setValorMercado(e.target.value)}
+                                />
 
                             </Form.Group>
                             
@@ -111,42 +117,37 @@ export default function FormFornecedor () {
 
                                 <Form.Input
                                     fluid
-                                    label='Fone Celular'
-                                    width={6}>
-                                    <InputMask 
-                                        mask="(99) 9999.9999"
-                                        value={foneCelular}
-			                            onChange={e => setFoneCelular(e.target.value)}
-                                    /> 
-                                </Form.Input>
+                                    label='Página Web'
+                                    maxLength="100"
+                                    value={paginaWeb}
+			                        onChange={e => setPaginaWeb(e.target.value)}
+                                    />
 
-                                <Form.Input
-                                    fluid
-                                    label='Fone Fixo'
-                                    width={6}>
-                                    <InputMask 
-                                        mask="(99) 9999.9999"
-                                        value={foneFixo}
-			                            onChange={e => setFoneFixo(e.target.value)}
-                                    /> 
-                                </Form.Input>
+                            </Form.Group>
+                        
+                            <Form.Group>
 
-                                <Form.Input
+                            <Form.Input
                                     fluid
-                                    label='Data Nascimento'
+                                    label='QTD de Funcionários'
+                                    value={qtdFuncionarios}
+			                        onChange={e => setQtdFuncionarios(e.target.value)}
+                                />
+                             <Form.Input
+                                    fluid
+                                    label='Inicio de Contrato'
                                     width={6}
                                 >
                                     <InputMask 
                                         mask="99/99/9999" 
                                         maskChar={null}
-                                        placeholder="Ex: 20/03/1985"
-                                        value={dataNascimento}
-			                            onChange={e => setDataNascimento(e.target.value)}
+                                        placeholder="Ex: 25/07/2021"
+                                        value={inicioContrato}
+			                            onChange={e => setInicioContrato(e.target.value)}
                                     /> 
                                 </Form.Input>
+                           </Form.Group>
 
-                            </Form.Group>
-                        
                         </Form>
                         
                         <div style={{marginTop: '4%'}}>

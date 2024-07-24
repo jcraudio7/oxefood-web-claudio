@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Button, Container, Divider, Icon, Table } from 'semantic-ui-react';
 import MenuSistema from '../../MenuSistema';
 
-export default function ListCliente () {
+export default function ListFabricante () {
 
    const [lista, setLista] = useState([]);
    const [openModal, setOpenModal] = useState(false);
@@ -16,7 +16,7 @@ export default function ListCliente () {
 
    function carregarLista() {
 
-       axios.get("http://localhost:8081/api/fornecedor")
+       axios.get("http://localhost:8081/api/fabricante")
        .then((response) => {
            setLista(response.data)
        })
@@ -37,30 +37,30 @@ function confirmaRemover(id) {
 }
 async function remover() {
 
-    await axios.delete('http://localhost:8081/api/fornecedor/' + idRemover)
+    await axios.delete('http://localhost:8081/api/fabricante/' + idRemover)
     .then((response) => {
 
-        console.log('Fornecedor removido com sucesso.')
+        console.log('Fabricante removido com sucesso.')
 
-        axios.get("http://localhost:8081/api/fornecedor")
+        axios.get("http://localhost:8081/api/fabricante")
         .then((response) => {
             setLista(response.data)
         })
     })
     .catch((error) => {
-        console.log('Erro ao remover um fornecedor.')
+        console.log('Erro ao remover um fabricante.')
     })
     setOpenModal(false)
 }
 
 return(
     <div>
-        <MenuSistema tela={'fornecedor'} />
+        <MenuSistema tela={'fabricante'} />
         <div style={{marginTop: '3%'}}>
 
             <Container textAlign='justified' >
 
-                <h2> Fornecedor </h2>
+                <h2> Fabricante </h2>
                 <Divider />
 
                 <div style={{marginTop: '4%'}}>
@@ -71,7 +71,7 @@ return(
                         icon='clipboard outline'
                         floated='right'
                         as={Link}
-                        to='/form-fornecedor'
+                        to='/form-fabricante'
                     />
  <br/><br/><br/>
                   
@@ -80,44 +80,44 @@ return(
                       <Table.Header>
                           <Table.Row>
                               <Table.HeaderCell>Nome</Table.HeaderCell>
-                              <Table.HeaderCell>Data Fundação</Table.HeaderCell>
                               <Table.HeaderCell>Endereço</Table.HeaderCell>
-                              <Table.HeaderCell>Valor de Mercado</Table.HeaderCell>
-                              <Table.HeaderCell>Contato do Vendedor</Table.HeaderCell>
+                              <Table.HeaderCell>Valor Mercado</Table.HeaderCell>
                               <Table.HeaderCell>Página Web</Table.HeaderCell>
+                              <Table.HeaderCell>Qtd Funcionários</Table.HeaderCell>
+                              <Table.HeaderCell>Inicio Contrato</Table.HeaderCell>
                               <Table.HeaderCell textAlign='center'>Ações</Table.HeaderCell>
                           </Table.Row>
                       </Table.Header>
                  
                       <Table.Body>
 
-                          { lista.map(fornecedor => (
+                          { lista.map(fabricante => (
 
-                              <Table.Row key={fornecedor.id}>
-                                  <Table.Cell>{fornecedor.nome}</Table.Cell>
-                                  <Table.Cell>{fornecedor.dataFundacao}</Table.Cell>
-                                  <Table.Cell>{formatarData(fornecedor.endereco)}</Table.Cell>
-                                  <Table.Cell>{fornecedor.valorDeMercado}</Table.Cell>
-                                  <Table.Cell>{fornecedor.contatoDoVendedor}</Table.Cell>
-                                  <Table.Cell>{fornecedor.paginaWeb}</Table.Cell>
+                              <Table.Row key={fabricante.id}>
+                                  <Table.Cell>{fabricante.nome}</Table.Cell>
+                                  <Table.Cell>{fabricante.endereco}</Table.Cell>
+                                  <Table.Cell>{fabricante.valorMercado}</Table.Cell>
+                                  <Table.Cell>{fabricante.paginaWeb}</Table.Cell>
+                                  <Table.Cell>{fabricante.qtdfuncionarios}</Table.Cell>
+                                  <Table.Cell>{formatarData(fabricante.inicioContrato)}</Table.Cell>
                                   <Table.Cell textAlign='center'>
 
                                   <Button
                                         inverted
                                         circular
                                         color='green'
-                                        title='Clique aqui para editar os dados deste fornecedor'
+                                        title='Clique aqui para editar os dados deste fabricante'
                                         icon>
-                                            <Link to="/form-fornecedor" state={{id: fornecedor.id}} style={{color: 'green'}}> <Icon name='edit' /> </Link>
+                                            <Link to="/form-fabricante" state={{id: fabricante.id}} style={{color: 'green'}}> <Icon name='edit' /> </Link>
                                      </Button> &nbsp;
                                      
                                       <Button
                                                inverted
                                                circular
                                                color='red'
-                                               title='Clique aqui para remover este fornecedor'
+                                               title='Clique aqui para remover este fabricante'
                                                icon>
-                                                onClick={e => confirmaRemover(fornecedor.id)} 
+                                                onClick={e => confirmaRemover(fabricante.id)} 
                                                    <Icon name='trash' />
                                            </Button>
 
