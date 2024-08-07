@@ -4,12 +4,13 @@ import InputMask from 'react-input-mask';
 import { Button, Container, Divider, Form, Icon } from 'semantic-ui-react';
 import MenuSistema from '../../MenuSistema';
 import { Link, useLocation } from "react-router-dom";
+import {mensagemErro, notifyError, notifySuccess } from '../../views/util/Util';
+
 
 export default function FormCliente () {
 
     const { state } = useLocation();
     const [idCliente, setIdCliente] = useState();
-
     const [nome, setNome] = useState();
     const [cpf, setCpf] = useState();
     const [dataNascimento, setDataNascimento] = useState();
@@ -47,11 +48,16 @@ export default function FormCliente () {
         .catch((error) => { console.log('Erro ao alter um cliente.') })
     } else { //Cadastro:
         axios.post("http://localhost:8081/api/cliente", clienteRequest)
-        .then((response) => { console.log('Cliente cadastrado com sucesso.') })
-        .catch((error) => { console.log('Erro ao incluir o cliente.') })
+        .then((response) => { notifySuccess('Cliente cadastrado com sucesso.') })
+        .catch((error) => {if (error.response) {
+            notifyError(error.response.data.message)
+            } else {
+            notifyError(mensagemErro)
+            } 
+            
     }
 
-}
+
 
 
     return (

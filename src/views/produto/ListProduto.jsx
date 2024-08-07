@@ -161,9 +161,8 @@ async function filtrarProdutos(codigoParam, tituloParam, idCategoriaParam) {
                     label='Categoria'
                     options={listaCategoriaProduto}
                     value={idCategoria}
-                    onChange={(e,{value}) => {
-  handleChangeCategoriaProduto(value)
-                                           }}
+                    onChange={(e,{value}) => handleChangeCategoriaProduto(value)
+                                           }
                 />
                 
             </Form.Group>
