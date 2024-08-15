@@ -46,6 +46,13 @@ class MenuSistema extends React.Component{
                        as={Link}
                        to='/list-entregador'
                    />
+                   <Menu.Item
+                    className='navbar__item--mobile'
+                    onClick={this.logout}
+                    content='Sair'
+                    as={Link}
+                    to='/'
+                />
 
                </Menu>
            </>
