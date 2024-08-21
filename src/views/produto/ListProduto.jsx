@@ -24,7 +24,7 @@ export default function ListProduto() {
       setLista(response.data);
     });
     
-    axios.get("http://localhost:8080/api/categoriaproduto")
+    axios.get("http://localhost:8081/api/categoriaproduto")
     .then((response) => {
 
         const dropDownCategorias = [];
@@ -106,7 +106,7 @@ async function filtrarProdutos(codigoParam, tituloParam, idCategoriaParam) {
       formData.append('idCategoria', idCategoriaParam);
   }
 
-  await axios.get("http://localhost:8080/api/produto/filtrar", formData)
+  await axios.get("http://localhost:8081/api/produto/filtrar", formData)
   .then((response) => {
       setListaProdutos(response.data)
   })
